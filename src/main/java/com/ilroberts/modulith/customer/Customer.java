@@ -1,4 +1,4 @@
-package com.ilroberts.modulith.customer.internal.model;
+package com.ilroberts.modulith.customer;
 
 import jakarta.persistence.*;
 import lombok.Data;

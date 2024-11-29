@@ -1,8 +1,9 @@
-package com.ilroberts.modulith.customer.internal.controller;
+package com.ilroberts.modulith.customer.web;
 
-import com.ilroberts.modulith.customer.internal.model.Customer;
-import com.ilroberts.modulith.customer.internal.service.CustomerService;
+import com.ilroberts.modulith.customer.Customer;
+import com.ilroberts.modulith.customer.CustomerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,9 +11,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/customer")
 @RequiredArgsConstructor
-public class CustomerController {
+class CustomerController {
 
-    private final CustomerService customerService;
+    @Autowired
+    private CustomerService customerService;
 
     @PostMapping
     public Customer addCustomer(@RequestBody Customer customer) {

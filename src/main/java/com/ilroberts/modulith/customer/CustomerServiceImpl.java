@@ -1,8 +1,5 @@
-package com.ilroberts.modulith.customer.internal.service;
+package com.ilroberts.modulith.customer;
 
-import com.ilroberts.modulith.customer.internal.model.Customer;
-import com.ilroberts.modulith.customer.internal.repository.CustomerRepository;
-import com.ilroberts.modulith.product.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,39 +9,39 @@ import java.util.stream.StreamSupport;
 
 @Service
 @RequiredArgsConstructor
-public class CustomerService {
+class CustomerServiceImpl implements CustomerService{
 
-    private final CustomerRepository customerRepository;
+    private final Customers customers;
 
     public Customer addCustomer(Customer customer) {
 
         customer.setId(null);
-        return customerRepository.save(customer);
+        return customers.save(customer);
     }
 
     public Customer updateCustomer(Long id, Customer customer) {
-        Optional<Customer> existingCustomer = customerRepository.findById(id);
+        Optional<Customer> existingCustomer = customers.findById(id);
         if (existingCustomer.isPresent()) {
             Customer updatedCustomer = existingCustomer.get();
             updatedCustomer.setName(customer.getName());
             updatedCustomer.setEmail(customer.getEmail());
-            return customerRepository.save(updatedCustomer);
+            return customers.save(updatedCustomer);
         } else {
             throw new RuntimeException("Customer not found");
         }
     }
 
     public void deleteCustomer(Long id) {
-        customerRepository.deleteById(id);
+        customers.deleteById(id);
     }
 
     public Customer getCustomer(Long id) {
-        return customerRepository.findById(id)
+        return customers.findById(id)
                 .orElseThrow(() -> new RuntimeException("Customer not found"));
     }
 
     public List<Customer> getAllCustomers() {
-        Iterable<Customer> customerIterator = customerRepository.findAll();
+        Iterable<Customer> customerIterator = customers.findAll();
         return StreamSupport.stream(customerIterator.spliterator(), false)
                 .toList();
     }
