@@ -1,4 +1,4 @@
-package com.ilroberts.customer.model;
+package com.ilroberts.modulith.customer.internal.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -18,6 +18,11 @@ public class Customer {
 
     public Customer(Long id, String name, String email) {
         this.id = id;
+        this.name = name;
+        this.email = email;
+    }
+
+    public Customer(String name, String email) {
         this.name = name;
         this.email = email;
     }

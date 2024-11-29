@@ -1,4 +1,4 @@
-package com.ilroberts.customer.config;
+package com.ilroberts.modulith.customer.internal.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

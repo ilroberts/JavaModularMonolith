@@ -1,4 +1,4 @@
-package com.ilroberts;
+package com.ilroberts.modulith;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,10 +6,10 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 
 @SpringBootApplication
 @ConfigurationPropertiesScan
-public class JavaModulithApplication {
+public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(JavaModulithApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 
 }

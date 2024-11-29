@@ -1,4 +1,4 @@
-package com.ilroberts.customer.config;
+package com.ilroberts.modulith.customer.internal.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @RequiredArgsConstructor
-public class CorsConfig {
+public class CustomerCorsConfig {
 
     private final CustomerConfig customerConfig;
 

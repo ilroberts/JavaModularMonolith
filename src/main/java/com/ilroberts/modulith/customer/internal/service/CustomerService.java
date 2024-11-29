@@ -1,7 +1,8 @@
-package com.ilroberts.customer.service;
+package com.ilroberts.modulith.customer.internal.service;
 
-import com.ilroberts.customer.model.Customer;
-import com.ilroberts.customer.repository.CustomerRepository;
+import com.ilroberts.modulith.customer.internal.model.Customer;
+import com.ilroberts.modulith.customer.internal.repository.CustomerRepository;
+import com.ilroberts.modulith.product.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ public class CustomerService {
     private final CustomerRepository customerRepository;
 
     public Customer addCustomer(Customer customer) {
+
         customer.setId(null);
         return customerRepository.save(customer);
     }

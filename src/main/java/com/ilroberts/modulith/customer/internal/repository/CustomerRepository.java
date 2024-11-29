@@ -1,6 +1,6 @@
-package com.ilroberts.customer.repository;
+package com.ilroberts.modulith.customer.internal.repository;
 
-import com.ilroberts.customer.model.Customer;
+import com.ilroberts.modulith.customer.internal.model.Customer;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

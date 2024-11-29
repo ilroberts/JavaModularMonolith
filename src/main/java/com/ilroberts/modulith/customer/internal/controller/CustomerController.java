@@ -1,14 +1,14 @@
-package com.ilroberts.customer.controller;
+package com.ilroberts.modulith.customer.internal.controller;
 
-import com.ilroberts.customer.model.Customer;
-import com.ilroberts.customer.service.CustomerService;
+import com.ilroberts.modulith.customer.internal.model.Customer;
+import com.ilroberts.modulith.customer.internal.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/customer")
+@RequestMapping("/api/customer")
 @RequiredArgsConstructor
 public class CustomerController {
 
