@@ -100,6 +100,12 @@
             <artifactId>jmolecules-starter-test</artifactId>
             <version>0.24.1</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.jmolecules.integrations/jmolecules-bytebuddy -->
+        <dependency>
+            <groupId>org.jmolecules.integrations</groupId>
+            <artifactId>jmolecules-bytebuddy</artifactId>
+            <version>0.24.1</version>
+        </dependency>
     </dependencies>
     <dependencyManagement>
         <dependencies>
