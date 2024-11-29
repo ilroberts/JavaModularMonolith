@@ -24,9 +24,9 @@ class ProductServiceImpl implements ProductService {
         return products.save(product);
     }
 
-    public Product updateProduct(String id, Product productDetails) {
+    public Product updateProduct(Long id, Product productDetails) {
         validateProduct(productDetails);
-        Optional<Product> optionalProduct = products.findById(ProductId.of(id));
+        Optional<Product> optionalProduct = products.findById(id);
         if (optionalProduct.isPresent()) {
             Product originalProduct = optionalProduct.get();
             var updatedProduct = Product.builder()
@@ -41,12 +41,12 @@ class ProductServiceImpl implements ProductService {
         }
     }
 
-    public void deleteProduct(String id) {
-        products.deleteById(ProductId.of(id));
+    public void deleteProduct(Long id) {
+        products.deleteById(id);
     }
 
-    public Product getProduct(String id) {
-        return products.findById(ProductId.of(id)).orElseThrow(() -> new RuntimeException("Product not found with id " + id));
+    public Product getProduct(Long id) {
+        return products.findById(id).orElseThrow(() -> new RuntimeException("Product not found with id " + id));
     }
 
     public List<Product> getAllProducts() {

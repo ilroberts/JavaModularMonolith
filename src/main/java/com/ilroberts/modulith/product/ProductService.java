@@ -6,11 +6,11 @@ public interface ProductService {
 
     Product addProduct(Product product);
 
-    Product updateProduct(String id, Product productDetails);
+    Product updateProduct(Long id, Product productDetails);
 
-    void deleteProduct(String id);
+    void deleteProduct(Long id);
 
-    Product getProduct(String id);
+    Product getProduct(Long id);
 
     List<Product> getAllProducts();
 
