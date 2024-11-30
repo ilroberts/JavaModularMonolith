@@ -1,29 +1,10 @@
 package com.ilroberts.modulith.customer;
 
-import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Builder;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 
-@Data
-@Entity
-@NoArgsConstructor
-public class Customer {
+@Builder
+@Table("customer")
+public record Customer(@Id Long id, String name, String email) {}
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_id_seq")
-    @SequenceGenerator(name = "customer_id_seq", sequenceName = "customer_id_seq", allocationSize = 1)
-    public Long id;
-    public String name;
-    public String email;
-
-    public Customer(Long id, String name, String email) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-    }
-
-    public Customer(String name, String email) {
-        this.name = name;
-        this.email = email;
-    }
-}

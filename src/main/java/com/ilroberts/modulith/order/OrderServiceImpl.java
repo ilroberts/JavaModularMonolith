@@ -19,22 +19,43 @@ class OrderServiceImpl implements OrderService {
 
     @Override
     public Optional<Order> addOrder(Order order) {
-        var customer = customerService.getCustomer(order.getCustomer().getId());
+        var customer = customerService.getCustomer(order.customerId());
         if (customer.isEmpty()) {
             return Optional.empty();
         }
-        order.setId(null);
-        return Optional.of(orders.save(order));
+
+        // check if all products exist
+        for (OrderItem item : order.items()) {
+            var product = productService.getProduct(item.productId());
+            if (product.isEmpty()) {
+                return Optional.empty();
+            }
+        }
+        var newOrder = Order.builder()
+                .customerId(order.customerId())
+                .items(order.items())
+                .build();
+
+        return Optional.of(orders.save(newOrder));
     }
 
     @Override
     public Order updateOrder(Long id, Order order) {
         Optional<Order> existingOrder = orders.findById(id);
         if (existingOrder.isPresent()) {
+            if (order.customerId() != null) {
+                var customer = customerService.getCustomer(order.customerId());
+                if (customer.isEmpty()) {
+                    throw new RuntimeException("Customer not found");
+                }
+            }
             Order updatedOrder = existingOrder.get();
-            updatedOrder.setCustomer(order.getCustomer());
-            updatedOrder.setItems(order.getItems());
-            return orders.save(updatedOrder);
+            Order newOrder = Order.builder()
+                    .id(updatedOrder.id())
+                    .customerId(order.customerId())
+                    .items(order.items() != null ? order.items() : updatedOrder.items())
+                    .build();
+            return orders.save(newOrder);
         } else {
             throw new RuntimeException("Order not found");
         }

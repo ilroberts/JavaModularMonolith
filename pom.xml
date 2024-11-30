@@ -70,10 +70,10 @@
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>2.7.0</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa -->
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jdbc -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <artifactId>spring-boot-starter-data-jdbc</artifactId>
             <version>3.4.0</version>
         </dependency>
         <dependency>

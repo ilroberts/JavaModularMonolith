@@ -30,10 +30,10 @@ class ProductServiceImpl implements ProductService {
         if (optionalProduct.isPresent()) {
             Product originalProduct = optionalProduct.get();
             var updatedProduct = Product.builder()
-                    .id(originalProduct.getId())
-                    .name(productDetails.getName())
-                    .description(productDetails.getDescription())
-                    .price(productDetails.getPrice())
+                    .id(originalProduct.id())
+                    .name(productDetails.name())
+                    .description(productDetails.description())
+                    .price(productDetails.price())
                     .build();
             return products.save(updatedProduct);
         } else {
@@ -45,8 +45,8 @@ class ProductServiceImpl implements ProductService {
         products.deleteById(id);
     }
 
-    public Product getProduct(Long id) {
-        return products.findById(id).orElseThrow(() -> new RuntimeException("Product not found with id " + id));
+    public Optional<Product> getProduct(Long id) {
+        return products.findById(id);
     }
 
     public List<Product> getAllProducts() {
@@ -56,13 +56,13 @@ class ProductServiceImpl implements ProductService {
     }
 
     private void validateProduct(Product product) {
-        if (product.getName() == null || product.getName().isEmpty()) {
+        if (product.name() == null || product.name().isEmpty()) {
             throw new IllegalArgumentException("Product name cannot be null or empty");
         }
-        if (product.getDescription() == null || product.getDescription().isEmpty()) {
+        if (product.description() == null || product.description().isEmpty()) {
             throw new IllegalArgumentException("Product description cannot be null or empty");
         }
-        if (product.getPrice() == null || product.getPrice().compareTo(BigDecimal.ZERO) <= 0) {
+        if (product.price() == null || product.price().compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("Product price must be greater than zero");
         }
     }

@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/products")
@@ -35,8 +36,10 @@ class ProductController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProduct(@PathVariable Long id) {
-        Product product = productService.getProduct(id);
-        return ResponseEntity.ok(product);
+        Optional<Product> optionalProduct = productService.getProduct(id);
+
+        return optionalProduct.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping

@@ -1,8 +1,7 @@
 package com.ilroberts.modulith.customer;
 
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
+import org.springframework.data.repository.CrudRepository;
+
 interface Customers extends CrudRepository<Customer, Long> {
 }

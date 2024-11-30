@@ -29,22 +29,21 @@ class CustomerServiceImplUnitTest {
 
     @Test
     void addCustomer() {
-        Customer customer = new Customer("John Doe", "john.doe@example.com");
+        Customer customer = new Customer(null, "John Doe", "john.doe@example.com");
         when(customersRepository.save(any(Customer.class))).thenReturn(customer);
 
         Customer savedCustomer = customerService.addCustomer(customer);
 
         assertThat(savedCustomer).isNotNull();
-        assertThat(savedCustomer.getName()).isEqualTo("John Doe");
-        assertThat(savedCustomer.getEmail()).isEqualTo("john.doe@example.com");
+        assertThat(savedCustomer.name()).isEqualTo("John Doe");
+        assertThat(savedCustomer.email()).isEqualTo("john.doe@example.com");
         verify(customersRepository, times(1)).save(customer);
     }
 
     @Test
     void updateCustomer() {
-        Customer existingCustomer = new Customer("John Doe", "john.doe@example.com");
-        existingCustomer.setId(1L);
-        Customer updatedCustomer = new Customer("Jane Doe", "jane.doe@example.com");
+        Customer existingCustomer = new Customer(1L,"John Doe", "john.doe@example.com");
+        Customer updatedCustomer = new Customer(null,"Jane Doe", "jane.doe@example.com");
 
         when(customersRepository.findById(1L)).thenReturn(Optional.of(existingCustomer));
         when(customersRepository.save(any(Customer.class))).thenReturn(updatedCustomer);
@@ -52,8 +51,8 @@ class CustomerServiceImplUnitTest {
         Customer result = customerService.updateCustomer(1L, updatedCustomer);
 
         assertThat(result).isNotNull();
-        assertThat(result.getName()).isEqualTo("Jane Doe");
-        assertThat(result.getEmail()).isEqualTo("jane.doe@example.com");
+        assertThat(result.name()).isEqualTo("Jane Doe");
+        assertThat(result.email()).isEqualTo("jane.doe@example.com");
         verify(customersRepository, times(1)).findById(1L);
         verify(customersRepository, times(1)).save(existingCustomer);
     }
@@ -69,23 +68,22 @@ class CustomerServiceImplUnitTest {
 
     @Test
     void getCustomer() {
-        Customer customer = new Customer("John Doe", "john.doe@example.com");
-        customer.setId(1L);
+        Customer customer = new Customer(1L,"John Doe", "john.doe@example.com");
 
         when(customersRepository.findById(1L)).thenReturn(Optional.of(customer));
 
         Customer result = customerService.getCustomer(1L).get();
 
         assertThat(result).isNotNull();
-        assertThat(result.getName()).isEqualTo("John Doe");
-        assertThat(result.getEmail()).isEqualTo("john.doe@example.com");
+        assertThat(result.name()).isEqualTo("John Doe");
+        assertThat(result.email()).isEqualTo("john.doe@example.com");
         verify(customersRepository, times(1)).findById(1L);
     }
 
     @Test
     void getAllCustomers() {
-        Customer customer1 = new Customer("John Doe", "john.doe@example.com");
-        Customer customer2 = new Customer("Jane Doe", "jane.doe@example.com");
+        Customer customer1 = new Customer(null,"John Doe", "john.doe@example.com");
+        Customer customer2 = new Customer(null,"Jane Doe", "jane.doe@example.com");
 
         when(customersRepository.findAll()).thenReturn(Arrays.asList(customer1, customer2));
 

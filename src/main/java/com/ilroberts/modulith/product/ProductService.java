@@ -1,6 +1,7 @@
 package com.ilroberts.modulith.product;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductService {
 
@@ -10,7 +11,7 @@ public interface ProductService {
 
     void deleteProduct(Long id);
 
-    Product getProduct(Long id);
+    Optional<Product> getProduct(Long id);
 
     List<Product> getAllProducts();
 
