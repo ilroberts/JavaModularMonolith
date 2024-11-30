@@ -10,6 +10,7 @@ import jakarta.persistence.SequenceGenerator;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.jmolecules.ddd.types.AggregateRoot;
 
@@ -20,14 +21,15 @@ import java.math.BigDecimal;
 @Builder
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_id_seq")
     @SequenceGenerator(name = "product_id_seq", sequenceName = "product_id_seq", allocationSize = 1)
-    private final @Column(unique = true) Long id;
+    private @Column(unique = true) Long id;
 
-    private final String name;
-    private final String description;
-    private final BigDecimal price;
+    private String name;
+    private String description;
+    private BigDecimal price;
 }

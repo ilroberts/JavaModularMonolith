@@ -1,6 +1,7 @@
 package com.ilroberts.modulith.customer;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CustomerService {
 
@@ -10,7 +11,7 @@ public interface CustomerService {
 
     void deleteCustomer(Long id);
 
-    Customer getCustomer(Long id);
+    Optional<Customer> getCustomer(Long id);
 
     List<Customer> getAllCustomers();
 }

@@ -35,9 +35,8 @@ class CustomerServiceImpl implements CustomerService{
         customers.deleteById(id);
     }
 
-    public Customer getCustomer(Long id) {
-        return customers.findById(id)
-                .orElseThrow(() -> new RuntimeException("Customer not found"));
+    public Optional<Customer> getCustomer(Long id) {
+        return customers.findById(id);
     }
 
     public List<Customer> getAllCustomers() {

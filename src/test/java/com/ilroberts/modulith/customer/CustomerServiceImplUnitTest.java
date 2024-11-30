@@ -74,7 +74,7 @@ class CustomerServiceImplUnitTest {
 
         when(customersRepository.findById(1L)).thenReturn(Optional.of(customer));
 
-        Customer result = customerService.getCustomer(1L);
+        Customer result = customerService.getCustomer(1L).get();
 
         assertThat(result).isNotNull();
         assertThat(result.getName()).isEqualTo("John Doe");
