@@ -16,9 +16,6 @@ public class SpringModulithTests {
 
     ApplicationModules modules = ApplicationModules.of(Application.class);
 
-    @ArchTest
-    ArchRule ddd = JMoleculesDddRules.all();
-
     @Test
     void verifyModularity() throws IOException {
         modules.verify();

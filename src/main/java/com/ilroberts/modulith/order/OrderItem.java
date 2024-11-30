@@ -1,7 +1,8 @@
 package com.ilroberts.modulith.order;
 
-import com.ilroberts.modulith.product.Product;
 import lombok.Builder;
+import org.jmolecules.ddd.annotation.Entity;
+import org.jmolecules.ddd.annotation.Identity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
@@ -9,5 +10,5 @@ import java.math.BigDecimal;
 
 @Builder
 @Table("order_item")
-public record OrderItem(@Id Long id, Long productId, int quantity, BigDecimal price) {}
-
+@Entity
+public record OrderItem(@Id @Identity Long id, Long productId, int quantity, BigDecimal price) {}
