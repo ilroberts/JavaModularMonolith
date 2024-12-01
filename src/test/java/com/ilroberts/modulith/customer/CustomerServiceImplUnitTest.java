@@ -10,7 +10,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -20,7 +21,6 @@ class CustomerServiceImplUnitTest {
 
     @Mock
     Customers customersRepository;
-
 
     @BeforeEach
     void setUp() {
@@ -42,8 +42,8 @@ class CustomerServiceImplUnitTest {
 
     @Test
     void updateCustomer() {
-        Customer existingCustomer = new Customer(1L,"John Doe", "john.doe@example.com");
-        Customer updatedCustomer = new Customer(null,"Jane Doe", "jane.doe@example.com");
+        Customer existingCustomer = new Customer(1L, "John Doe", "john.doe@example.com");
+        Customer updatedCustomer = new Customer(1L, "Jane Doe", "jane.doe@example.com");
 
         when(customersRepository.findById(1L)).thenReturn(Optional.of(existingCustomer));
         when(customersRepository.save(any(Customer.class))).thenReturn(updatedCustomer);
@@ -54,7 +54,20 @@ class CustomerServiceImplUnitTest {
         assertThat(result.name()).isEqualTo("Jane Doe");
         assertThat(result.email()).isEqualTo("jane.doe@example.com");
         verify(customersRepository, times(1)).findById(1L);
-        verify(customersRepository, times(1)).save(existingCustomer);
+        verify(customersRepository, times(1)).save(updatedCustomer);
+    }
+
+    @Test
+    void updateCustomerNotFound() {
+        Customer updatedCustomer = new Customer(1L, "Jane Doe", "jane.doe@example.com");
+
+        when(customersRepository.findById(1L)).thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> customerService.updateCustomer(1L, updatedCustomer))
+                .isInstanceOf(RuntimeException.class)
+                .hasMessage("Customer not found");
+        verify(customersRepository, times(1)).findById(1L);
+        verify(customersRepository, never()).save(any(Customer.class));
     }
 
     @Test
@@ -68,7 +81,7 @@ class CustomerServiceImplUnitTest {
 
     @Test
     void getCustomer() {
-        Customer customer = new Customer(1L,"John Doe", "john.doe@example.com");
+        Customer customer = new Customer(1L, "John Doe", "john.doe@example.com");
 
         when(customersRepository.findById(1L)).thenReturn(Optional.of(customer));
 
@@ -82,8 +95,8 @@ class CustomerServiceImplUnitTest {
 
     @Test
     void getAllCustomers() {
-        Customer customer1 = new Customer(null,"John Doe", "john.doe@example.com");
-        Customer customer2 = new Customer(null,"Jane Doe", "jane.doe@example.com");
+        Customer customer1 = new Customer(null, "John Doe", "john.doe@example.com");
+        Customer customer2 = new Customer(null, "Jane Doe", "jane.doe@example.com");
 
         when(customersRepository.findAll()).thenReturn(Arrays.asList(customer1, customer2));
 
@@ -91,6 +104,6 @@ class CustomerServiceImplUnitTest {
 
         assertThat(customers).isNotNull();
         assertThat(customers).hasSize(2);
-        verify(this.customersRepository, times(1)).findAll();
+        verify(customersRepository, times(1)).findAll();
     }
 }
