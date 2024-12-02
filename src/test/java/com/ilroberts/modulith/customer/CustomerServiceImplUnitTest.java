@@ -35,9 +35,9 @@ class CustomerServiceImplUnitTest {
         Customer savedCustomer = customerService.addCustomer(customer);
 
         assertThat(savedCustomer).isNotNull();
-        assertThat(savedCustomer.name()).isEqualTo("John Doe");
-        assertThat(savedCustomer.email()).isEqualTo("john.doe@example.com");
-        verify(customersRepository, times(1)).save(customer);
+        assertThat(savedCustomer.getName()).isEqualTo("John Doe");
+        assertThat(savedCustomer.getEmail()).isEqualTo("john.doe@example.com");
+        verify(customersRepository, times(1)).save(any(Customer.class));
     }
 
     @Test
@@ -51,10 +51,10 @@ class CustomerServiceImplUnitTest {
         Customer result = customerService.updateCustomer(1L, updatedCustomer);
 
         assertThat(result).isNotNull();
-        assertThat(result.name()).isEqualTo("Jane Doe");
-        assertThat(result.email()).isEqualTo("jane.doe@example.com");
+        assertThat(result.getName()).isEqualTo("Jane Doe");
+        assertThat(result.getEmail()).isEqualTo("jane.doe@example.com");
         verify(customersRepository, times(1)).findById(1L);
-        verify(customersRepository, times(1)).save(updatedCustomer);
+        verify(customersRepository, times(1)).save(any(Customer.class));
     }
 
     @Test
@@ -88,8 +88,8 @@ class CustomerServiceImplUnitTest {
         Customer result = customerService.getCustomer(1L).get();
 
         assertThat(result).isNotNull();
-        assertThat(result.name()).isEqualTo("John Doe");
-        assertThat(result.email()).isEqualTo("john.doe@example.com");
+        assertThat(result.getName()).isEqualTo("John Doe");
+        assertThat(result.getEmail()).isEqualTo("john.doe@example.com");
         verify(customersRepository, times(1)).findById(1L);
     }
 

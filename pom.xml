@@ -39,7 +39,15 @@
         <dependency>
             <groupId>org.springframework.modulith</groupId>
             <artifactId>spring-modulith-starter-core</artifactId>
+            <version>${spring-modulith.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework.modulith/spring-modulith-events-api -->
+        <dependency>
+            <groupId>org.springframework.modulith</groupId>
+            <artifactId>spring-modulith-events-api</artifactId>
+            <version>${spring-modulith.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>

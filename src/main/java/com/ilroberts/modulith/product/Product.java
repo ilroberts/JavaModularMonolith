@@ -9,6 +9,6 @@ import org.springframework.data.relational.core.mapping.Table;
 import java.math.BigDecimal;
 
 @Builder
-@Table("product")
+@Table("PRODUCT")
 @AggregateRoot
 public record Product(@Id @Identity Long id, String name, String description, BigDecimal price) {}
