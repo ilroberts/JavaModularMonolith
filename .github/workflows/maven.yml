@@ -35,3 +35,8 @@ jobs:
       run: mvn -B package --file pom.xml
     - name: Test with Maven
       run: mvn test
+    - name: Upload Code Coverage Report
+      uses: 'actions/upload-artifact@v4'
+      with:
+        name: jacoco-report
+        path: ${{ github.workspace }}/target/site/jacoco/jacoco.xml
