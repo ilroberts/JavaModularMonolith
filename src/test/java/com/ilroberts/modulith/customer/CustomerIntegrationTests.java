@@ -2,22 +2,22 @@ package com.ilroberts.modulith.customer;
 
 import com.ilroberts.modulith.Application;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ActiveProfiles;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT, classes = Application.class)
-@ActiveProfiles(value = "integration")
 public class CustomerIntegrationTests {
 
     private static final String BASE_URL = "http://localhost:8080/api/";
 
     @Test
+    @EnabledIfSystemProperty(named = "spring.profiles.active", matches = "integration")
     public void when_NoCustomersCreated_Then_ResponseIsEmpty() {
 
         TestRestTemplate template = new TestRestTemplate();
@@ -29,6 +29,7 @@ public class CustomerIntegrationTests {
     }
 
     @Test
+    @EnabledIfSystemProperty(named = "spring.profiles.active", matches = "integration")
     public void when_CustomerCreated_Then_ResponseContainsCustomer() {
 
         var createdCustomer = createCustomer( "Bilbo Baggins", "b.baggins@theshire.com");
@@ -39,6 +40,7 @@ public class CustomerIntegrationTests {
     }
 
     @Test
+    @EnabledIfSystemProperty(named = "spring.profiles.active", matches = "integration")
     public void when_CustomerUpdated_Then_ResponseContainsUpdatedCustomer() {
 
         TestRestTemplate template = new TestRestTemplate();
@@ -64,6 +66,7 @@ public class CustomerIntegrationTests {
     }
 
     @Test
+    @EnabledIfSystemProperty(named = "spring.profiles.active", matches = "integration")
     public void when_CustomerDeleted_Then_ResponseIsEmpty() {
 
         TestRestTemplate template = new TestRestTemplate();
