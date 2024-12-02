@@ -9,6 +9,6 @@ import org.springframework.data.relational.core.mapping.Table;
 import java.util.Set;
 
 @Builder
-@Table("orders")
+@Table("ORDERS")
 @AggregateRoot
 public record Order(@Id @Identity Long id, Long customerId, Set<OrderItem> items) {}

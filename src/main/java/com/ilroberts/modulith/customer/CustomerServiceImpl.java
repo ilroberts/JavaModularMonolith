@@ -16,20 +16,24 @@ class CustomerServiceImpl implements CustomerService{
     public Customer addCustomer(Customer customer) {
 
         Customer newCustomer = Customer.builder()
-                .name(customer.name())
-                .email(customer.email())
+                .name(customer.getName())
+                .email(customer.getEmail())
                 .build();
+
+        // register the new customer event
+        newCustomer.initialize();
+
         return customers.save(newCustomer);
     }
 
     public Customer updateCustomer(Long id, Customer customer) {
-        var optionalCustomer = customers.findById(customer.id());
+        var optionalCustomer = customers.findById(customer.getId());
 
         var updatedCustomer = optionalCustomer.map( c -> {
             return Customer.builder()
-                    .id(c.id())
-                    .name(customer.name())
-                    .email(customer.email())
+                    .id(c.getId())
+                    .name(customer.getName())
+                    .email(customer.getEmail())
                     .build();
         }).orElseThrow(() -> new RuntimeException("Customer not found"));
         customers.save(updatedCustomer);
