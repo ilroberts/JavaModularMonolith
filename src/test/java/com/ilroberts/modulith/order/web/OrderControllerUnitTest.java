@@ -43,7 +43,7 @@ class OrderControllerUnitTest {
 
     @Test
     void addOrder() throws Exception {
-        Order order = new Order(null, 1L, Set.of(new OrderItem(1L, 1L, 2, BigDecimal.valueOf(10.0))));
+        Order order = new Order(null, 1L, Set.of(new OrderItem(1L, 2, BigDecimal.valueOf(10.0))));
         when(orderService.addOrder(any(Order.class))).thenReturn(Optional.of(order));
 
         mockMvc.perform(post("/api/orders")
@@ -60,7 +60,7 @@ class OrderControllerUnitTest {
 
     @Test
     void updateOrder() throws Exception {
-        Order order = new Order(1L, 1L, Set.of(new OrderItem(1L, 1L, 2, BigDecimal.valueOf(10.0))));
+        Order order = new Order(1L, 1L, Set.of(new OrderItem(1L,  2, BigDecimal.valueOf(10.0))));
         when(orderService.updateOrder(anyLong(), any(Order.class))).thenReturn(order);
 
         mockMvc.perform(put("/api/orders/1")
@@ -87,7 +87,7 @@ class OrderControllerUnitTest {
 
     @Test
     void getOrder() throws Exception {
-        Order order = new Order(1L, 1L, Set.of(new OrderItem(1L, 1L, 2, BigDecimal.valueOf(10.0))));
+        Order order = new Order(1L, 1L, Set.of(new OrderItem(1L, 2, BigDecimal.valueOf(10.0))));
         when(orderService.getOrder(anyLong())).thenReturn(order);
 
         mockMvc.perform(get("/api/orders/1"))
@@ -103,8 +103,8 @@ class OrderControllerUnitTest {
     @Test
     void getAllOrders() throws Exception {
         List<Order> orders = Arrays.asList(
-                new Order(1L, 1L, Set.of(new OrderItem(1L, 1L, 2, BigDecimal.valueOf(10.0)))),
-                new Order(2L, 2L, Set.of(new OrderItem(2L, 2L, 3, BigDecimal.valueOf(20.0))))
+                new Order(1L, 1L, Set.of(new OrderItem(1L, 2, BigDecimal.valueOf(10.0)))),
+                new Order(2L, 2L, Set.of(new OrderItem(2L, 3, BigDecimal.valueOf(20.0))))
         );
         when(orderService.getAllOrders()).thenReturn(orders);
 

@@ -11,4 +11,4 @@ import java.math.BigDecimal;
 @Builder
 @Table("ORDER_ITEM")
 @Entity
-public record OrderItem(@Id @Identity Long id, Long productId, int quantity, BigDecimal price) {}
+public record OrderItem(Long productId, int quantity, BigDecimal price) {}
