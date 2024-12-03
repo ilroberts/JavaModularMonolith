@@ -91,6 +91,8 @@ A modular monolith combines the simplicity of a monolithic application with the 
 
 ## Example Feature Modules
 
+![Feature Modules](images/application-context.jpg)
+
 ### Orders Module
 
 - Manages order creation, updates, and queries.
