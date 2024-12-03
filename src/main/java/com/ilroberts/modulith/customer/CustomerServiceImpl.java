@@ -1,6 +1,7 @@
 package com.ilroberts.modulith.customer;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.Optional;
 import java.util.stream.StreamSupport;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 class CustomerServiceImpl implements CustomerService{
 
@@ -23,6 +25,7 @@ class CustomerServiceImpl implements CustomerService{
         // register the new customer event
         newCustomer.initialize();
 
+        log.info("New customer created: {}", newCustomer);
         return customers.save(newCustomer);
     }
 

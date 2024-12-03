@@ -11,4 +11,4 @@ import java.util.Set;
 @Builder
 @Table("ORDERS")
 @AggregateRoot
-public record Order(@Id @Identity Long id, Long customerId, Set<OrderItem> items) {}
+public record Order(@Id @Identity Long id, Long customerId, Set<OrderItem> orderItems) {}

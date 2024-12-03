@@ -27,8 +27,7 @@ public class OrderController {
     public ResponseEntity<Order> addOrder(@RequestBody Order order) {
         Optional<Order> createdOrder = orderService.addOrder(order);
 
-        return createdOrder.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.badRequest().build());
+        return createdOrder.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
     @PutMapping("/{id}")
