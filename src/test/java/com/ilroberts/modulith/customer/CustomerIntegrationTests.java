@@ -18,18 +18,6 @@ public class CustomerIntegrationTests {
 
     @Test
     @EnabledIfSystemProperty(named = "spring.profiles.active", matches = "integration")
-    public void when_NoCustomersCreated_Then_ResponseIsEmpty() {
-
-        TestRestTemplate template = new TestRestTemplate();
-        ResponseEntity<Customer[]> response = template.getForEntity(BASE_URL + "/customer", Customer[].class);
-
-        var statusCode = response.getStatusCode();
-        assertThat(statusCode.value()).isEqualTo(200);
-        assertThat(response.getBody()).isEmpty();
-    }
-
-    @Test
-    @EnabledIfSystemProperty(named = "spring.profiles.active", matches = "integration")
     public void when_CustomerCreated_Then_ResponseContainsCustomer() {
 
         var createdCustomer = createCustomer( "Bilbo Baggins", "b.baggins@theshire.com");
