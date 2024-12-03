@@ -25,7 +25,7 @@ class OrderServiceImpl implements OrderService {
         }
 
         // check if all products exist
-        for (OrderItem item : order.items()) {
+        for (OrderItem item : order.orderItems()) {
             var product = productService.getProduct(item.productId());
             if (product.isEmpty()) {
                 return Optional.empty();
@@ -33,7 +33,7 @@ class OrderServiceImpl implements OrderService {
         }
         var newOrder = Order.builder()
                 .customerId(order.customerId())
-                .items(order.items())
+                .orderItems(order.orderItems())
                 .build();
 
         return Optional.of(orders.save(newOrder));
@@ -53,7 +53,7 @@ class OrderServiceImpl implements OrderService {
             Order newOrder = Order.builder()
                     .id(updatedOrder.id())
                     .customerId(order.customerId())
-                    .items(order.items() != null ? order.items() : updatedOrder.items())
+                    .orderItems(order.orderItems() != null ? order.orderItems() : updatedOrder.orderItems())
                     .build();
             return orders.save(newOrder);
         } else {

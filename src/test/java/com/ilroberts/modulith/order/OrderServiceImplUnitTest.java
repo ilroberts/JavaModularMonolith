@@ -40,7 +40,7 @@ class OrderServiceImplUnitTest {
 
     @Test
     void addOrder() {
-        Order order = new Order(null, 1L, Set.of(new OrderItem(1L, 1L, 2, BigDecimal.valueOf(10.0))));
+        Order order = new Order(null, 1L, Set.of(new OrderItem(1L, 2, BigDecimal.valueOf(10.0))));
         when(customerService.getCustomer(1L)).thenReturn(Optional.of(new Customer(1L, "John Doe", "john.doe@example.com")));
         when(productService.getProduct(1L)).thenReturn(Optional.of(new Product(1L, "Product1", "Description1", BigDecimal.valueOf(10.0))));
         when(ordersRepository.save(any(Order.class))).thenReturn(order);
@@ -49,13 +49,13 @@ class OrderServiceImplUnitTest {
 
         assertThat(savedOrder).isPresent();
         assertThat(savedOrder.get().customerId()).isEqualTo(1L);
-        assertThat(savedOrder.get().items()).hasSize(1);
+        assertThat(savedOrder.get().orderItems()).hasSize(1);
         verify(ordersRepository, times(1)).save(order);
     }
 
     @Test
     void addOrderCustomerNotFound() {
-        Order order = new Order(null, 1L, Set.of(new OrderItem(1L, 1L, 2, BigDecimal.valueOf(10.0))));
+        Order order = new Order(null, 1L, Set.of(new OrderItem(1L, 2, BigDecimal.valueOf(10.0))));
         when(customerService.getCustomer(1L)).thenReturn(Optional.empty());
 
         Optional<Order> result = orderService.addOrder(order);
@@ -66,7 +66,7 @@ class OrderServiceImplUnitTest {
 
     @Test
     void addOrderProductNotFound() {
-        Order order = new Order(null, 1L, Set.of(new OrderItem(1L, 1L, 2, BigDecimal.valueOf(10.0))));
+        Order order = new Order(null, 1L, Set.of(new OrderItem(1L, 2, BigDecimal.valueOf(10.0))));
         when(customerService.getCustomer(1L)).thenReturn(Optional.of(new Customer(1L, "John Doe", "john.doe@example.com")));
         when(productService.getProduct(1L)).thenReturn(Optional.empty());
 
@@ -78,8 +78,8 @@ class OrderServiceImplUnitTest {
 
     @Test
     void updateOrder() {
-        Order existingOrder = new Order(1L, 1L, Set.of(new OrderItem(1L, 1L, 2, BigDecimal.valueOf(10.0))));
-        Order updatedOrder = new Order(1L, 1L, Set.of(new OrderItem(1L, 1L, 3, BigDecimal.valueOf(10.0))));
+        Order existingOrder = new Order(1L, 1L, Set.of(new OrderItem(1L, 2, BigDecimal.valueOf(10.0))));
+        Order updatedOrder = new Order(1L, 1L, Set.of(new OrderItem(1L, 3, BigDecimal.valueOf(10.0))));
         when(ordersRepository.findById(1L)).thenReturn(Optional.of(existingOrder));
         when(customerService.getCustomer(1L)).thenReturn(Optional.of(new Customer(1L, "John Doe", "john.doe@example.com")));
         when(ordersRepository.save(any(Order.class))).thenReturn(updatedOrder);
@@ -87,15 +87,15 @@ class OrderServiceImplUnitTest {
         Order result = orderService.updateOrder(1L, updatedOrder);
 
         assertThat(result).isNotNull();
-        assertThat(result.items()).hasSize(1);
-        assertThat(result.items().iterator().next().quantity()).isEqualTo(3);
+        assertThat(result.orderItems()).hasSize(1);
+        assertThat(result.orderItems().iterator().next().quantity()).isEqualTo(3);
         verify(ordersRepository, times(1)).findById(1L);
         verify(ordersRepository, times(1)).save(any(Order.class));
     }
 
     @Test
     void updateOrderNotFound() {
-        Order updatedOrder = new Order(1L, 1L, Set.of(new OrderItem(1L, 1L, 3, BigDecimal.valueOf(10.0))));
+        Order updatedOrder = new Order(1L, 1L, Set.of(new OrderItem(1L, 3, BigDecimal.valueOf(10.0))));
         when(ordersRepository.findById(1L)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> orderService.updateOrder(1L, updatedOrder))
@@ -116,21 +116,21 @@ class OrderServiceImplUnitTest {
 
     @Test
     void getOrder() {
-        Order order = new Order(1L, 1L, Set.of(new OrderItem(1L, 1L, 2, BigDecimal.valueOf(10.0))));
+        Order order = new Order(1L, 1L, Set.of(new OrderItem(1L,2, BigDecimal.valueOf(10.0))));
         when(ordersRepository.findById(1L)).thenReturn(Optional.of(order));
 
         Order result = orderService.getOrder(1L);
 
         assertThat(result).isNotNull();
         assertThat(result.customerId()).isEqualTo(1L);
-        assertThat(result.items()).hasSize(1);
+        assertThat(result.orderItems()).hasSize(1);
         verify(ordersRepository, times(1)).findById(1L);
     }
 
     @Test
     void getAllOrders() {
-        Order order1 = new Order(1L, 1L, Set.of(new OrderItem(1L, 1L, 2, BigDecimal.valueOf(10.0))));
-        Order order2 = new Order(2L, 2L, Set.of(new OrderItem(2L, 2L, 3, BigDecimal.valueOf(20.0))));
+        Order order1 = new Order(1L, 1L, Set.of(new OrderItem(1L, 1, BigDecimal.valueOf(10.0))));
+        Order order2 = new Order(2L, 2L, Set.of(new OrderItem(2L, 2, BigDecimal.valueOf(20.0))));
         when(ordersRepository.findAll()).thenReturn(List.of(order1, order2));
 
         List<Order> orders = orderService.getAllOrders();
