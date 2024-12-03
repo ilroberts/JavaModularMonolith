@@ -1,6 +1,6 @@
 # Java Modular Monolith with Spring and JMolecules
 
-![Java Modulith](https://github.com/ilroberts/JavaModularMonolith/actions/workflows/maven.yml/badge.svg)
+![Java Modulith](https://github.com/ilroberts/JavaModularMonolith/actions/workflows/maven.yml/badge.svg) ![Coverage](.github/badges/jacoco.svg)
 
 Welcome to the **Java Modular Monolith** repository! This project demonstrates the implementation of a modular monolith architecture using the Spring framework. It also incorporates **JMolecules**, a framework that enforces domain-driven design (DDD) concepts through a set of annotations and patterns.
 
