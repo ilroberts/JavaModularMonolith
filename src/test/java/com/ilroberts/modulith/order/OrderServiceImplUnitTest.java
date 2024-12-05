@@ -1,6 +1,7 @@
 package com.ilroberts.modulith.order;
 
 import com.ilroberts.modulith.customer.Customer;
+import com.ilroberts.modulith.customer.CustomerId;
 import com.ilroberts.modulith.customer.CustomerService;
 import com.ilroberts.modulith.product.Product;
 import com.ilroberts.modulith.product.ProductService;
@@ -40,9 +41,12 @@ class OrderServiceImplUnitTest {
 
     @Test
     void addOrder() {
-        Order order = new Order(null, 1L, Set.of(new OrderItem(1L, 2, BigDecimal.valueOf(10.0))));
-        when(customerService.getCustomer(1L)).thenReturn(Optional.of(new Customer(1L, "John Doe", "john.doe@example.com")));
-        when(productService.getProduct(1L)).thenReturn(Optional.of(new Product(1L, "Product1", "Description1", BigDecimal.valueOf(10.0))));
+        Order order = new Order(null, 1L,
+                Set.of(new OrderItem(1L, 2, BigDecimal.valueOf(10.0))));
+        when(customerService.getCustomer(CustomerId.of(1L)))
+                .thenReturn(Optional.of(new Customer(CustomerId.of(1L), "John Doe", "john.doe@example.com")));
+        when(productService.getProduct(1L))
+                .thenReturn(Optional.of(new Product(1L, "Product1", "Description1", BigDecimal.valueOf(10.0))));
         when(ordersRepository.save(any(Order.class))).thenReturn(order);
 
         Optional<Order> savedOrder = orderService.addOrder(order);
@@ -55,8 +59,9 @@ class OrderServiceImplUnitTest {
 
     @Test
     void addOrderCustomerNotFound() {
-        Order order = new Order(null, 1L, Set.of(new OrderItem(1L, 2, BigDecimal.valueOf(10.0))));
-        when(customerService.getCustomer(1L)).thenReturn(Optional.empty());
+        Order order = new Order(null, 1L,
+                Set.of(new OrderItem(1L, 2, BigDecimal.valueOf(10.0))));
+        when(customerService.getCustomer(CustomerId.of(1L))).thenReturn(Optional.empty());
 
         Optional<Order> result = orderService.addOrder(order);
 
@@ -66,8 +71,10 @@ class OrderServiceImplUnitTest {
 
     @Test
     void addOrderProductNotFound() {
-        Order order = new Order(null, 1L, Set.of(new OrderItem(1L, 2, BigDecimal.valueOf(10.0))));
-        when(customerService.getCustomer(1L)).thenReturn(Optional.of(new Customer(1L, "John Doe", "john.doe@example.com")));
+        Order order = new Order(null, 1L,
+                Set.of(new OrderItem(1L, 2, BigDecimal.valueOf(10.0))));
+        when(customerService.getCustomer(CustomerId.of(1L)))
+                .thenReturn(Optional.of(new Customer(CustomerId.of(1L), "John Doe", "john.doe@example.com")));
         when(productService.getProduct(1L)).thenReturn(Optional.empty());
 
         Optional<Order> result = orderService.addOrder(order);
@@ -81,7 +88,8 @@ class OrderServiceImplUnitTest {
         Order existingOrder = new Order(1L, 1L, Set.of(new OrderItem(1L, 2, BigDecimal.valueOf(10.0))));
         Order updatedOrder = new Order(1L, 1L, Set.of(new OrderItem(1L, 3, BigDecimal.valueOf(10.0))));
         when(ordersRepository.findById(1L)).thenReturn(Optional.of(existingOrder));
-        when(customerService.getCustomer(1L)).thenReturn(Optional.of(new Customer(1L, "John Doe", "john.doe@example.com")));
+        when(customerService.getCustomer(CustomerId.of(1L)))
+                .thenReturn(Optional.of(new Customer(CustomerId.of(1L), "John Doe", "john.doe@example.com")));
         when(ordersRepository.save(any(Order.class))).thenReturn(updatedOrder);
 
         Order result = orderService.updateOrder(1L, updatedOrder);

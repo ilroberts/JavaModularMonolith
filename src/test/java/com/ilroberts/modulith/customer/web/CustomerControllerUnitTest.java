@@ -1,6 +1,7 @@
 package com.ilroberts.modulith.customer.web;
 
 import com.ilroberts.modulith.customer.Customer;
+import com.ilroberts.modulith.customer.CustomerId;
 import com.ilroberts.modulith.customer.CustomerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,10 +18,9 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class CustomerControllerUnitTest {
@@ -40,7 +40,7 @@ class CustomerControllerUnitTest {
 
     @Test
     void addCustomer() throws Exception {
-        Customer customer = new Customer(1L, "John Doe", "john.doe@example.com");
+        Customer customer = new Customer(CustomerId.of(1L), "John Doe", "john.doe@example.com");
         when(customerService.addCustomer(any(Customer.class))).thenReturn(customer);
 
         mockMvc.perform(post("/api/customer")
@@ -56,8 +56,8 @@ class CustomerControllerUnitTest {
 
     @Test
     void updateCustomer() throws Exception {
-        Customer customer = new Customer(1L, "John Doe", "john.doe@example.com");
-        when(customerService.updateCustomer(anyLong(), any(Customer.class))).thenReturn(customer);
+        Customer customer = new Customer(CustomerId.of(1L), "John Doe", "john.doe@example.com");
+        when(customerService.updateCustomer(any(CustomerId.class), any(Customer.class))).thenReturn(customer);
 
         mockMvc.perform(put("/api/customer/1")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -67,23 +67,23 @@ class CustomerControllerUnitTest {
                 .andExpect(jsonPath("$.name").value("John Doe"))
                 .andExpect(jsonPath("$.email").value("john.doe@example.com"));
 
-        verify(customerService, times(1)).updateCustomer(anyLong(), any(Customer.class));
+        verify(customerService, times(1)).updateCustomer(any(CustomerId.class), any(Customer.class));
     }
 
     @Test
     void deleteCustomer() throws Exception {
-        doNothing().when(customerService).deleteCustomer(anyLong());
+        doNothing().when(customerService).deleteCustomer(any(CustomerId.class));
 
         mockMvc.perform(delete("/api/customer/1"))
                 .andExpect(status().isOk());
 
-        verify(customerService, times(1)).deleteCustomer(anyLong());
+        verify(customerService, times(1)).deleteCustomer(any(CustomerId.class));
     }
 
     @Test
     void getCustomer() throws Exception {
-        Customer customer = new Customer(1L, "John Doe", "john.doe@example.com");
-        when(customerService.getCustomer(anyLong())).thenReturn(Optional.of(customer));
+        Customer customer = new Customer(CustomerId.of(1L), "John Doe", "john.doe@example.com");
+        when(customerService.getCustomer(any(CustomerId.class))).thenReturn(Optional.of(customer));
 
         mockMvc.perform(get("/api/customer/1"))
                 .andExpect(status().isOk())
@@ -91,14 +91,14 @@ class CustomerControllerUnitTest {
                 .andExpect(jsonPath("$.name").value("John Doe"))
                 .andExpect(jsonPath("$.email").value("john.doe@example.com"));
 
-        verify(customerService, times(1)).getCustomer(anyLong());
+        verify(customerService, times(1)).getCustomer(any(CustomerId.class));
     }
 
     @Test
     void getAllCustomers() throws Exception {
         List<Customer> customers = Arrays.asList(
-                new Customer(1L, "John Doe", "john.doe@example.com"),
-                new Customer(2L, "Jane Doe", "jane.doe@example.com")
+                new Customer(CustomerId.of(1L), "John Doe", "john.doe@example.com"),
+                new Customer(CustomerId.of(2L), "Jane Doe", "jane.doe@example.com")
         );
         when(customerService.getAllCustomers()).thenReturn(customers);
 

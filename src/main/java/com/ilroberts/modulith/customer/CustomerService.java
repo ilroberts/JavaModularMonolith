@@ -7,11 +7,11 @@ public interface CustomerService {
 
     Customer addCustomer(Customer customer);
 
-    Customer updateCustomer(Long id, Customer customer);
+    Customer updateCustomer(CustomerId id, Customer customer);
 
-    void deleteCustomer(Long id);
+    void deleteCustomer(CustomerId id);
 
-    Optional<Customer> getCustomer(Long id);
+    Optional<Customer> getCustomer(CustomerId id);
 
     List<Customer> getAllCustomers();
 }

@@ -2,9 +2,6 @@ package com.ilroberts;
 
 import com.ilroberts.modulith.Application;
 import com.tngtech.archunit.junit.AnalyzeClasses;
-import com.tngtech.archunit.junit.ArchTest;
-import com.tngtech.archunit.lang.ArchRule;
-import org.jmolecules.archunit.JMoleculesDddRules;
 import org.junit.jupiter.api.Test;
 import org.springframework.modulith.core.ApplicationModules;
 import org.springframework.modulith.docs.Documenter;
