@@ -1,5 +1,6 @@
 package com.ilroberts.modulith.order;
 
+import com.ilroberts.modulith.customer.CustomerId;
 import com.ilroberts.modulith.customer.CustomerService;
 import com.ilroberts.modulith.product.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ class OrderServiceImpl implements OrderService {
 
     @Override
     public Optional<Order> addOrder(Order order) {
-        var customer = customerService.getCustomer(order.customerId());
+        var customer = customerService.getCustomer(CustomerId.of(order.customerId()));
         if (customer.isEmpty()) {
             return Optional.empty();
         }
@@ -44,7 +45,7 @@ class OrderServiceImpl implements OrderService {
         Optional<Order> existingOrder = orders.findById(id);
         if (existingOrder.isPresent()) {
             if (order.customerId() != null) {
-                var customer = customerService.getCustomer(order.customerId());
+                var customer = customerService.getCustomer(CustomerId.of(order.customerId()));
                 if (customer.isEmpty()) {
                     throw new RuntimeException("Customer not found");
                 }

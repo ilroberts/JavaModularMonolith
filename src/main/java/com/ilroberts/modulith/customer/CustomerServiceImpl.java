@@ -11,28 +11,19 @@ import java.util.stream.StreamSupport;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-class CustomerServiceImpl implements CustomerService{
+class CustomerServiceImpl implements CustomerService {
 
     private final Customers customers;
 
     public Customer addCustomer(Customer customer) {
 
-        Customer newCustomer = Customer.builder()
-                .name(customer.getName())
-                .email(customer.getEmail())
-                .build();
-
-        // register the new customer event
-        newCustomer.initialize();
-
-        log.info("New customer created: {}", newCustomer);
-        return customers.save(newCustomer);
+        return customers.save(customer.initialize());
     }
 
-    public Customer updateCustomer(Long id, Customer customer) {
-        var optionalCustomer = customers.findById(customer.getId());
+    public Customer updateCustomer(CustomerId id, Customer customer) {
+        var optionalCustomer = customers.findById(id);
 
-        var updatedCustomer = optionalCustomer.map( c -> {
+        var updatedCustomer = optionalCustomer.map(c -> {
             return Customer.builder()
                     .id(c.getId())
                     .name(customer.getName())
@@ -43,11 +34,11 @@ class CustomerServiceImpl implements CustomerService{
         return updatedCustomer;
     }
 
-    public void deleteCustomer(Long id) {
+    public void deleteCustomer(CustomerId id) {
         customers.deleteById(id);
     }
 
-    public Optional<Customer> getCustomer(Long id) {
+    public Optional<Customer> getCustomer(CustomerId id) {
         return customers.findById(id);
     }
 
